@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mknikker Race Teller</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f0f0f0;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+
+  .blokjes-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .blok {
+    width: 120px;
+    height: 120px;
+    font-size: 2.5em;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    transition: transform 0.1s;
+  }
+
+  .blok:active {
+    transform: scale(0.95);
+  }
+
+  #green { background-color: #28a745; }
+  #yellow { background-color: #ffc107; color: black; }
+  #red { background-color: #dc3545; }
+  #blue { background-color: #007bff; }
+  #orange { background-color: #fd7e14; }
+
+  button {
+    padding: 15px 30px;
+    font-size: 1.5em;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    background-color: #6c757d;
+    color: white;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    transition: background 0.2s;
+  }
+
+  button:hover {
+    background-color: #5a6268;
+  }
+
+  #confetti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 9999;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: red;
+    opacity: 0.9;
+    border-radius: 50%;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Mknikker Race Teller</h1>
+
+<div class="blokjes-container">
+  <div class="blok" id="green">0</div>
+  <div class="blok" id="yellow">0</div>
+  <div class="blok" id="red">0</div>
+  <div class="blok" id="blue">0</div>
+  <div class="blok" id="orange">0</div>
+</div>
+
+<button id="resetBtn">Reset</button>
+
+<div id="confetti"></div>
+
+<audio id="cheerSound" src="https://www.soundjay.com/human/applause-01.mp3"></audio>
+
+<script>
+  const blokjes = document.querySelectorAll('.blok');
+  const confettiContainer = document.getElementById('confetti');
+  const cheerSound = document.getElementById('cheerSound');
+
+  blokjes.forEach(blok => {
+    blok.addEventListener('click', () => {
+      let count = parseInt(blok.textContent);
+      if(count < 5){
+        count++;
+        blok.textContent = count;
+        if(count === 5){
+          showConfetti();
+          cheerSound.currentTime = 0;
+          cheerSound.play();
+        }
+      }
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    blokjes.forEach(blok => blok.textContent = '0');
+    confettiContainer.innerHTML = '';
+  });
+
+  function showConfetti() {
+    const colors = ['#ff0000','#00ff00','#0000ff','#ffff00','#ff7f00','#ff00ff','#00ffff'];
+    for(let i=0; i<150; i++){
+      const piece = document.createElement('div');
+      piece.classList.add('confetti-piece');
+      piece.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.animationDuration = 1.5 + Math.random()*2 + 's';
+      piece.style.width = 8 + Math.random()*8 + 'px';
+      piece.style.height = piece.style.width;
+      confettiContainer.appendChild(piece);
+
+      setTimeout(() => {
+        piece.remove();
+      }, 3500);
+    }
+  }
+</script>
+
+</body>
+</html>
