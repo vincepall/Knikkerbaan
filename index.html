@@ -102,17 +102,11 @@
     .confetti {
       position: absolute;
       opacity: 0.9;
-      animation: explode linear forwards;
+      animation: fall linear forwards;
     }
 
-    @keyframes explode {
-      0% {
-        transform: translateY(0) scale(1) rotate(0deg);
-      }
-      20% {
-        transform: translateY(-100px) scale(1.2) rotate(180deg);
-      }
-      100% {
+    @keyframes fall {
+      to {
         transform: translateY(100vh) rotate(1080deg);
         opacity: 0;
       }
@@ -134,12 +128,15 @@
 
   <div id="confetti-container"></div>
 
+  <!-- Geluiden -->
   <audio id="cheer-sound" src="https://www.soundjay.com/human/kids-cheering-01.mp3"></audio>
+  <audio id="applause-sound" src="https://www.soundjay.com/human/applause-8.mp3"></audio>
 
   <script>
     const blokjes = document.querySelectorAll('.blok');
     const confettiContainer = document.getElementById('confetti-container');
     const cheerSound = document.getElementById('cheer-sound');
+    const applauseSound = document.getElementById('applause-sound');
 
     blokjes.forEach(blok => {
       blok.addEventListener('click', () => {
@@ -151,7 +148,9 @@
           if (count === 5) {
             showConfetti();
             cheerSound.currentTime = 0;
+            applauseSound.currentTime = 0;
             cheerSound.play();
+            applauseSound.play();
           }
         }
       });
@@ -163,25 +162,33 @@
     });
 
     function showConfetti() {
-      for (let i = 0; i < 200; i++) {
+      for (let i = 0; i < 200; i++) { // veel meer confetti
         const confetti = document.createElement('div');
         confetti.classList.add('confetti');
-        const size = Math.random() * 12 + 6; // varieer grootte
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.top = -10 + 'px';
+        confetti.style.backgroundColor = randomColor();
+
+        // willekeurige vorm
+        if (Math.random() > 0.5) {
+          confetti.style.borderRadius = '50%'; // rondje
+        }
+
+        // willekeurige grootte
+        const size = Math.random() * 12 + 6; 
         confetti.style.width = size + 'px';
         confetti.style.height = size + 'px';
-        confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.top = -20 + 'px';
-        confetti.style.backgroundColor = randomColor();
+
         confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
         confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
         confettiContainer.appendChild(confetti);
 
-        setTimeout(() => confetti.remove(), 6000);
+        setTimeout(() => confetti.remove(), 5000);
       }
     }
 
     function randomColor() {
-      const colors = ['#ff0', '#f0f', '#0ff', '#0f0', '#f00', '#00f', '#ffa500'];
+      const colors = ['#ff0', '#f0f', '#0ff', '#0f0', '#f00', '#00f', '#ffa500', '#ff69b4'];
       return colors[Math.floor(Math.random() * colors.length)];
     }
   </script>
