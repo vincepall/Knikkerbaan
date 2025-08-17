@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>knikker Race Teller</title>
+<title>Knikker Race Teller</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -33,11 +33,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 15px;
+    border-radius: 50%; /* maakt het een cirkel */
     cursor: pointer;
     user-select: none;
     position: relative;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    box-shadow: inset -8px -8px 15px rgba(0,0,0,0.3), inset 5px 5px 10px rgba(255,255,255,0.4), 0 6px 12px rgba(0,0,0,0.4);
     transition: transform 0.1s;
   }
 
@@ -45,11 +45,24 @@
     transform: scale(0.95);
   }
 
-  #green { background-color: #28a745; }
-  #yellow { background-color: #ffc107; color: black; }
-  #red { background-color: #dc3545; }
-  #blue { background-color: #007bff; }
-  #orange { background-color: #fd7e14; }
+  /* Extra highlight voor "knikker-effect" */
+  .blok::after {
+    content: "";
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    width: 40%;
+    height: 40%;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    filter: blur(8px);
+  }
+
+  #green { background: radial-gradient(circle at 30% 30%, #5cff5c, #28a745); }
+  #yellow { background: radial-gradient(circle at 30% 30%, #fff48c, #ffc107); color: black; }
+  #red { background: radial-gradient(circle at 30% 30%, #ff6f6f, #dc3545); }
+  #blue { background: radial-gradient(circle at 30% 30%, #6fbaff, #007bff); }
+  #orange { background: radial-gradient(circle at 30% 30%, #ffb36f, #fd7e14); }
 
   button {
     padding: 15px 30px;
@@ -96,7 +109,7 @@
 </head>
 <body>
 
-<h1>Evan's knikker Race Teller</h1>
+<h1>Evan's Knikker Race Teller</h1>
 
 <div class="blokjes-container">
   <div class="blok" id="green">0</div>
