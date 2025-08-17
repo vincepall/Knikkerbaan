@@ -8,13 +8,15 @@
   body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background: #f0f0f0;
+    background: linear-gradient(135deg, #ffe4e1, #e0f7fa, #fff9c4);
     padding: 20px;
+    min-height: 100vh;
   }
 
   h1 {
     font-size: 2em;
     margin-bottom: 20px;
+    color: #444;
   }
 
   .blokjes-container {
@@ -29,15 +31,20 @@
     width: 120px;
     height: 120px;
     font-size: 2.5em;
-    color: white;
+    color: black; /* altijd leesbaar */
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%; /* maakt het een cirkel */
+    border-radius: 50%;
     cursor: pointer;
     user-select: none;
     position: relative;
-    box-shadow: inset -8px -8px 15px rgba(0,0,0,0.3), inset 5px 5px 10px rgba(255,255,255,0.4), 0 6px 12px rgba(0,0,0,0.4);
+    font-weight: bold;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0) 40%),
+                radial-gradient(circle at bottom right, rgba(255,255,255,0.2), rgba(0,0,0,0.3));
+    box-shadow: inset -8px -8px 20px rgba(0,0,0,0.3),
+                inset 5px 5px 15px rgba(255,255,255,0.5),
+                0 6px 12px rgba(0,0,0,0.4);
     transition: transform 0.1s;
   }
 
@@ -45,24 +52,26 @@
     transform: scale(0.95);
   }
 
-  /* Extra highlight voor "knikker-effect" */
+  /* Extra highlight voor "knikker-glans" */
   .blok::after {
     content: "";
     position: absolute;
     top: 15%;
     left: 25%;
-    width: 40%;
-    height: 40%;
+    width: 35%;
+    height: 35%;
     border-radius: 50%;
-    background: rgba(255,255,255,0.5);
-    filter: blur(8px);
+    background: rgba(255,255,255,0.6);
+    filter: blur(6px);
+    pointer-events: none;
   }
 
-  #green { background: radial-gradient(circle at 30% 30%, #5cff5c, #28a745); }
-  #yellow { background: radial-gradient(circle at 30% 30%, #fff48c, #ffc107); color: black; }
-  #red { background: radial-gradient(circle at 30% 30%, #ff6f6f, #dc3545); }
-  #blue { background: radial-gradient(circle at 30% 30%, #6fbaff, #007bff); }
-  #orange { background: radial-gradient(circle at 30% 30%, #ffb36f, #fd7e14); }
+  /* Kleuren van knikkers */
+  #green { background-color: #28a745; background-image: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), rgba(40,167,69,0.9)); }
+  #yellow { background-color: #ffc107; background-image: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), rgba(255,193,7,0.9)); }
+  #red { background-color: #dc3545; background-image: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), rgba(220,53,69,0.9)); }
+  #blue { background-color: #007bff; background-image: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), rgba(0,123,255,0.9)); }
+  #orange { background-color: #fd7e14; background-image: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), rgba(253,126,20,0.9)); }
 
   button {
     padding: 15px 30px;
