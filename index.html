@@ -48,7 +48,7 @@
 
     .blok span {
       position: relative;
-      z-index: 2; /* cijfers altijd boven de highlight */
+      z-index: 2;
       color: black;
     }
 
@@ -63,7 +63,7 @@
       background: rgba(255,255,255,0.6);
       filter: blur(6px);
       pointer-events: none;
-      z-index: 1; /* highlight onder de cijfers */
+      z-index: 1;
     }
 
     #green { background: #4CAF50; }
@@ -101,16 +101,19 @@
 
     .confetti {
       position: absolute;
-      width: 10px;
-      height: 10px;
-      background-color: red;
-      opacity: 0.8;
-      animation: fall linear forwards;
+      opacity: 0.9;
+      animation: explode linear forwards;
     }
 
-    @keyframes fall {
-      to {
-        transform: translateY(100vh) rotate(720deg);
+    @keyframes explode {
+      0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+      }
+      20% {
+        transform: translateY(-100px) scale(1.2) rotate(180deg);
+      }
+      100% {
+        transform: translateY(100vh) rotate(1080deg);
         opacity: 0;
       }
     }
@@ -160,17 +163,20 @@
     });
 
     function showConfetti() {
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 200; i++) {
         const confetti = document.createElement('div');
         confetti.classList.add('confetti');
+        const size = Math.random() * 12 + 6; // varieer grootte
+        confetti.style.width = size + 'px';
+        confetti.style.height = size + 'px';
         confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.top = -10 + 'px';
+        confetti.style.top = -20 + 'px';
         confetti.style.backgroundColor = randomColor();
         confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
         confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
         confettiContainer.appendChild(confetti);
 
-        setTimeout(() => confetti.remove(), 5000);
+        setTimeout(() => confetti.remove(), 6000);
       }
     }
 
